@@ -1,0 +1,15 @@
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/StockTrading.deps.json
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/StockTrading.runtimeconfig.json
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/StockTrading.runtimeconfig.dev.json
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/StockTrading.dll
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/ref/StockTrading.dll
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/bin/Debug/net5.0/StockTrading.pdb
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.csprojAssemblyReference.cache
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.AssemblyInfoInputs.cache
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.AssemblyInfo.cs
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.csproj.CoreCompileInputs.cache
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.dll
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/ref/StockTrading.dll
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.pdb
+/Users/jankes_mj/Sites/CodecademyProjects/C#/StockTrading/obj/Debug/net5.0/StockTrading.genruntimeconfig.cache
