@@ -31,7 +31,7 @@ namespace StockTrading
            {
               if((index + 1) == array.Length) {
 
-                Console.WriteLine("Lowest price was on the last day of the month. Subsequent highest selling price is not available.");
+                Console.WriteLine("\nLowest price was on the last day of the month. Subsequent highest selling price is not available.");
 
               } else {
 
@@ -41,8 +41,8 @@ namespace StockTrading
 
                   if(price > highPrice)
                   {
-                   highPrice = price;
-                   indexOfHigh = i;
+                    highPrice = price;
+                    indexOfHigh = i;
                   }             
                }
               }          
@@ -55,10 +55,13 @@ namespace StockTrading
             lowPrice = Decimal.MaxValue;
             highPrice = 0;
 
-            Console.WriteLine("Please input list of prices");
+
+            Console.WriteLine("\nPlease input list of prices");
+
             string priceList = Console.ReadLine();
 
             string[] splitPrices = priceList.Split(',', StringSplitOptions.TrimEntries);
+
 
             try
             {
@@ -67,22 +70,24 @@ namespace StockTrading
             } 
             catch(System.FormatException)
             {
-              Console.WriteLine("Incorrect data format.");
+              Console.WriteLine("\nIncorrect data format.");
               return;
             }
 
 
-            Console.WriteLine(lowPrice.ToString("0.00"));
-
-            if(highPrice > 0) Console.WriteLine(highPrice.ToString("0.00"));
-
+            if(highPrice > 0) {
+              Console.WriteLine($"\nResult: {indexOfLow + 1}({lowPrice.ToString("0.00")}),{indexOfHigh + 1}({highPrice.ToString("0.00")})");
+            } else {       
+              Console.WriteLine($"\nResult: {indexOfLow + 1}({lowPrice.ToString("0.00")})");
+            }
+             
             return;
 
         }
 
         static void askToContinue()
         {
-          Console.WriteLine("Press 'Y' to continue. Press any other key to quit.");
+          Console.WriteLine("\nPress 'Y' to continue. Press any other key to quit.");
           command = (Console.ReadLine()).ToLower();
         }
 
@@ -90,9 +95,7 @@ namespace StockTrading
         static void Main(string[] args)
         {
 
-
           while (command == "y" ) {
-
             Run();
             askToContinue();
 
