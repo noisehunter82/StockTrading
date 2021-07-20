@@ -9,6 +9,7 @@ namespace StockTrading
         static decimal highPrice;
         static int indexOfLow;
         static int indexOfHigh;
+        static string command = "y";
         
 
         static void findLowest(string[] array)
@@ -44,10 +45,7 @@ namespace StockTrading
                    indexOfHigh = i;
                   }             
                }
-
-              }
-
-             
+              }          
            }
 
 
@@ -74,38 +72,34 @@ namespace StockTrading
             }
 
 
-            Console.WriteLine(lowPrice);
+            Console.WriteLine(lowPrice.ToString("0.00"));
 
-            if(highPrice > 0) Console.WriteLine(highPrice);
+            if(highPrice > 0) Console.WriteLine(highPrice.ToString("0.00"));
 
             return;
 
         }
 
-        static string askToContinue()
+        static void askToContinue()
         {
-          Console.WriteLine("Wouldyou like to start again? (Y/N)");
-          
-        return (Console.ReadLine()).ToLower();;
+          Console.WriteLine("Press 'Y' to continue. Press any other key to quit.");
+          command = (Console.ReadLine()).ToLower();
         }
 
 
         static void Main(string[] args)
         {
 
-          Run();
 
-          string command = askToContinue();
+          while (command == "y" ) {
 
-          if(command == "y") {
             Run();
+            askToContinue();
+
           }
-          if(command == "n") {
+                 
           return;
-          }
-
-          askToContinue();
-
+        
         
         }
     }
