@@ -1,53 +1,13 @@
 ﻿using System;
 
-
 namespace StockTrading
 {
   class Program
   {
-    static decimal LowPrice { get; set; }
-    static decimal HighPrice { get; set; }
-    static int IndexOfLow { get; set; }
-    static int IndexOfHigh { get; set; }
     static bool Continue { get; set; }
 
 
     //---------------  Utility methods
-    static void FindLowest(string[] array)
-    {
-      for (var i = 0; i < array.Length; i++)
-      {
-        var dailyPrice = Convert.ToDecimal(array[i]);
-
-        if (dailyPrice < LowPrice)
-        {
-          LowPrice = dailyPrice;
-          IndexOfLow = i;
-        }
-      }
-    }
-
-    static void FindHighest(string[] array, int index)
-    {
-      if ((index + 1) == array.Length)
-      {
-        Console.WriteLine("\nLowest dailyPrice was on the last day of the month. Subsequent highest selling dailyPrice is not available.");
-      }
-      else
-      {
-
-        for (int i = index + 1; i < array.Length; i++)
-        {
-          var dailyPrice = Convert.ToDecimal(array[i]);
-
-          if (dailyPrice > HighPrice)
-          {
-            HighPrice = dailyPrice;
-            IndexOfHigh = i;
-          }
-        }
-      }
-    }
 
     static void AskToContinue()
     {
@@ -64,24 +24,37 @@ namespace StockTrading
     }
 
 
-    // --------------- Main program logic
+    static decimal[] ConvertToDecimal(string str)
+    {
+      string[] splitPrices = str.Split(',', StringSplitOptions.TrimEntries);
+      return Array.ConvertAll<string, decimal>(splitPrices, Convert.ToDecimal);
+    }
+
+
+    static void DisplayResults(LowDailyPrice low, HighDailyPrice high)
+    {
+      if (high.HighPrice > 0)
+      {
+        Console.WriteLine($"\nResult: {low.IndexOfLow + 1}({low.LowPrice.ToString("0.00")}),{high.IndexOfHigh + 1}({high.HighPrice.ToString("0.00")})");
+      }
+      else
+      {
+        Console.WriteLine($"\nLowest daily price was on the last day of the month. Subsequent highest selling daily price is not available.\n\nResult: {low.IndexOfLow + 1}({low.LowPrice.ToString("0.00")})");
+      }
+    }
+
+
     static void Run()
     {
-
-      LowPrice = Decimal.MaxValue;
-      HighPrice = 0;
-
+      // Ask user for data
       Console.WriteLine("\nPlease input list of prices");
-
       string priceList = Console.ReadLine();
 
-      string[] splitPrices = priceList.Split(',', StringSplitOptions.TrimEntries);
-
-
+      // Split and convert to decimal array and handle FormatExceptions.
+      decimal[] numericPrices;
       try
       {
-        FindLowest(splitPrices);
-        FindHighest(splitPrices, IndexOfLow);
+        numericPrices = ConvertToDecimal(priceList);
       }
       catch (System.FormatException)
       {
@@ -89,21 +62,20 @@ namespace StockTrading
         return;
       }
 
+      // Implement new instances and call methods for daily low and high prices.
+      LowDailyPrice Low = new LowDailyPrice();
+      Low.FindLowest(numericPrices);
 
-      if (HighPrice > 0)
-      {
-        Console.WriteLine($"\nResult: {IndexOfLow + 1}({LowPrice.ToString("0.00")}),{IndexOfHigh + 1}({HighPrice.ToString("0.00")})");
-      }
-      else
-      {
-        Console.WriteLine($"\nResult: {IndexOfLow + 1}({LowPrice.ToString("0.00")})");
-      }
+      HighDailyPrice High = new HighDailyPrice();
+      High.FindHighest(numericPrices, Low.IndexOfLow);
+
+      // Display results
+      DisplayResults(Low, High);
 
       return;
 
     }
 
-    // ---------------
 
 
     static void Main(string[] args)
