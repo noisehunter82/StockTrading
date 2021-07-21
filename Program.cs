@@ -1,109 +1,121 @@
 ﻿using System;
 
+
 namespace StockTrading
 {
-    class Program
+  class Program
+  {
+    static decimal LowPrice { get; set; }
+    static decimal HighPrice { get; set; }
+    static int IndexOfLow { get; set; }
+    static int IndexOfHigh { get; set; }
+    static bool Continue { get; set; }
+
+
+    //---------------  Utility methods
+    static void FindLowest(string[] array)
+    {
+      for (var i = 0; i < array.Length; i++)
+      {
+        var dailyPrice = Convert.ToDecimal(array[i]);
+
+        if (dailyPrice < LowPrice)
+        {
+          LowPrice = dailyPrice;
+          IndexOfLow = i;
+        }
+      }
+    }
+
+    static void FindHighest(string[] array, int index)
+    {
+      if ((index + 1) == array.Length)
+      {
+        Console.WriteLine("\nLowest dailyPrice was on the last day of the month. Subsequent highest selling dailyPrice is not available.");
+      }
+      else
+      {
+
+        for (int i = index + 1; i < array.Length; i++)
+        {
+          var dailyPrice = Convert.ToDecimal(array[i]);
+
+          if (dailyPrice > HighPrice)
+          {
+            HighPrice = dailyPrice;
+            IndexOfHigh = i;
+          }
+        }
+      }
+    }
+
+    static void AskToContinue()
+    {
+      Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
+
+      if (Console.ReadKey().Key == ConsoleKey.Escape)
+      {
+        Continue = false;
+      }
+      else
+      {
+        Continue = true;
+      }
+    }
+
+
+    // --------------- Main program logic
+    static void Run()
     {
 
-        static decimal lowPrice;
-        static decimal highPrice;
-        static int indexOfLow;
-        static int indexOfHigh;
-        static string command = "y";
-        
+      LowPrice = Decimal.MaxValue;
+      HighPrice = 0;
 
-        static void findLowest(string[] array)
-        {
-               for (int i = 0; i < array.Length; i++)
-               {
-                  decimal price = Convert.ToDecimal(array[i]);
+      Console.WriteLine("\nPlease input list of prices");
 
-                  if(price < lowPrice)
-                  {
-                   lowPrice = price;
-                   indexOfLow = i;
-                  }             
-                }
-           }
-           
+      string priceList = Console.ReadLine();
 
-        static void findHighest(string[] array, int index) 
-           {
-              if((index + 1) == array.Length) {
-
-                Console.WriteLine("\nLowest price was on the last day of the month. Subsequent highest selling price is not available.");
-
-              } else {
-
-                 for (int i = index + 1; i < array.Length; i++)
-              {
-                  decimal price = Convert.ToDecimal(array[i]);
-
-                  if(price > highPrice)
-                  {
-                    highPrice = price;
-                    indexOfHigh = i;
-                  }             
-               }
-              }          
-           }
+      string[] splitPrices = priceList.Split(',', StringSplitOptions.TrimEntries);
 
 
-        static void Run()
-        {
-
-            lowPrice = Decimal.MaxValue;
-            highPrice = 0;
-
-
-            Console.WriteLine("\nPlease input list of prices");
-
-            string priceList = Console.ReadLine();
-
-            string[] splitPrices = priceList.Split(',', StringSplitOptions.TrimEntries);
+      try
+      {
+        FindLowest(splitPrices);
+        FindHighest(splitPrices, IndexOfLow);
+      }
+      catch (System.FormatException)
+      {
+        Console.WriteLine("\nIncorrect data format.");
+        return;
+      }
 
 
-            try
-            {
-              findLowest(splitPrices);   
-              findHighest(splitPrices, indexOfLow);  
-            } 
-            catch(System.FormatException)
-            {
-              Console.WriteLine("\nIncorrect data format.");
-              return;
-            }
+      if (HighPrice > 0)
+      {
+        Console.WriteLine($"\nResult: {IndexOfLow + 1}({LowPrice.ToString("0.00")}),{IndexOfHigh + 1}({HighPrice.ToString("0.00")})");
+      }
+      else
+      {
+        Console.WriteLine($"\nResult: {IndexOfLow + 1}({LowPrice.ToString("0.00")})");
+      }
 
+      return;
 
-            if(highPrice > 0) {
-              Console.WriteLine($"\nResult: {indexOfLow + 1}({lowPrice.ToString("0.00")}),{indexOfHigh + 1}({highPrice.ToString("0.00")})");
-            } else {       
-              Console.WriteLine($"\nResult: {indexOfLow + 1}({lowPrice.ToString("0.00")})");
-            }
-             
-            return;
-
-        }
-
-        static void askToContinue()
-        {
-          Console.WriteLine("\nPress 'Y' to continue. Press any other key to quit.");
-          command = (Console.ReadLine()).ToLower();
-        }
-
-
-        static void Main(string[] args)
-        {
-
-          while (command == "y" ) {
-            Run();
-            askToContinue();
-
-          }
-                 
-          return;
-        
-        
-        }
     }
+
+    // ---------------
+
+
+    static void Main(string[] args)
+    {
+      Continue = true;
+      while (Continue)
+      {
+        Run();
+        AskToContinue();
+      }
+
+      return;
+    }
+  }
 }
