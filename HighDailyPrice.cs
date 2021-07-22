@@ -6,7 +6,7 @@ namespace StockTrading
   public class HighDailyPrice
   {
     public decimal HighPrice { get; set; }
-    public int IndexOfHigh { get; set; }
+    public int? IndexOfHigh { get; set; }
 
     public void FindHighest(decimal[] array, int index)
     {
@@ -31,6 +31,7 @@ namespace StockTrading
     public HighDailyPrice()
     {
       HighPrice = 0;
+      IndexOfHigh = null;
     }
 
   }

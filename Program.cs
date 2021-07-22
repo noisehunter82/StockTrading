@@ -31,16 +31,16 @@ namespace StockTrading
     }
 
 
-    static void DisplayResults(LowDailyPrice low, HighDailyPrice high)
+    static string DisplayResults(LowDailyPrice low, HighDailyPrice high)
     {
-      if (high.HighPrice > 0)
-      {
-        Console.WriteLine($"\nResult: {low.IndexOfLow + 1}({low.LowPrice.ToString("0.00")}),{high.IndexOfHigh + 1}({high.HighPrice.ToString("0.00")})");
-      }
-      else
-      {
-        Console.WriteLine($"\nLowest daily price was on the last day of the month. Subsequent highest selling daily price is not available.\n\nResult: {low.IndexOfLow + 1}({low.LowPrice.ToString("0.00")})");
-      }
+
+      var lowDay = low.IndexOfLow + 1;
+      var lowPrice = low.LowPrice.ToString("0.00");
+      var highDay = high.IndexOfHigh == null ? "N/A" : (high.IndexOfHigh + 1).ToString();
+      var highPrice = high.HighPrice.ToString("0.00");
+
+      return $"{lowDay}({lowPrice}),{highDay}({highPrice})";
+
     }
 
 
@@ -70,7 +70,7 @@ namespace StockTrading
       High.FindHighest(numericPrices, Low.IndexOfLow);
 
       // Display results
-      DisplayResults(Low, High);
+      Console.WriteLine($"\nResults: { DisplayResults(Low, High)}");
 
       return;
 
