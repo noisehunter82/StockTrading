@@ -2,7 +2,7 @@
 
 namespace StockTrading
 {
-  class Program
+  public class Program
   {
     static bool Continue { get; set; }
 
