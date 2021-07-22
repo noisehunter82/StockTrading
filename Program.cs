@@ -4,19 +4,19 @@ namespace StockTrading
 {
   public class Program
   {
-    static bool Continue { get; set; }
+    public static bool Continue { get; set; }
 
 
     //--------- Utilities
 
-    static decimal[] ConvertToDecimal(string str)
+    public static decimal[] ConvertToDecimal(string str)
     {
       string[] splitPrices = str.Split(',', StringSplitOptions.TrimEntries);
       return Array.ConvertAll<string, decimal>(splitPrices, Convert.ToDecimal);
     }
 
 
-    static string FormatResults(LowDailyPrice low, HighDailyPrice high)
+    public static string FormatResults(LowDailyPrice low, HighDailyPrice high)
     {
 
       var lowDay = low.IndexOfLow + 1;
@@ -31,7 +31,7 @@ namespace StockTrading
 
     // --------- Operations
 
-    static string Run(string str)
+    public static string Run(string str)
     {
       // Split string.
       decimal[] numericPrices;
@@ -56,11 +56,10 @@ namespace StockTrading
       return FormatResults(Low, High);
     }
 
-    static void AskToContinue()
-    {
-      Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
 
-      if (Console.ReadKey().Key == ConsoleKey.Escape)
+    public static void ToggleContinue(ConsoleKey key)
+    {
+      if (key == ConsoleKey.Escape)
       {
         Continue = false;
       }
@@ -79,7 +78,7 @@ namespace StockTrading
       {
         // Get user input
         Console.WriteLine("\nPlease input list of prices");
-        string priceList = Console.ReadLine();
+        var priceList = Console.ReadLine();
 
         // Run core logic
         var output = Run(priceList);
@@ -88,7 +87,9 @@ namespace StockTrading
         Console.WriteLine(output);
 
         // Quit or contuinue
-        AskToContinue();
+        Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
+        var key = Console.ReadKey().Key;
+        ToggleContinue(key);
       }
 
       return;
