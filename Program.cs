@@ -7,22 +7,7 @@ namespace StockTrading
     static bool Continue { get; set; }
 
 
-    //---------------  Utility methods
-
-    static void AskToContinue()
-    {
-      Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
-
-      if (Console.ReadKey().Key == ConsoleKey.Escape)
-      {
-        Continue = false;
-      }
-      else
-      {
-        Continue = true;
-      }
-    }
-
+    //--------- Utilities
 
     static decimal[] ConvertToDecimal(string str)
     {
@@ -31,7 +16,7 @@ namespace StockTrading
     }
 
 
-    static string DisplayResults(LowDailyPrice low, HighDailyPrice high)
+    static string FormatResults(LowDailyPrice low, HighDailyPrice high)
     {
 
       var lowDay = low.IndexOfLow + 1;
@@ -44,11 +29,14 @@ namespace StockTrading
     }
 
 
+    // --------- Operations
+
     static string Run(string str)
     {
-      // Split and convert to decimal array and handle FormatExceptions.
+      // Split string.
       decimal[] numericPrices;
-      
+
+      // Convert to decimal array and handle FormatExceptions.
       try
       {
         numericPrices = ConvertToDecimal(str);
@@ -65,23 +53,41 @@ namespace StockTrading
       HighDailyPrice High = new HighDailyPrice();
       High.FindHighest(numericPrices, Low.IndexOfLow);
 
-
-      return $"\nResults: { DisplayResults(Low, High)}";
+      return FormatResults(Low, High);
     }
 
+    static void AskToContinue()
+    {
+      Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
+
+      if (Console.ReadKey().Key == ConsoleKey.Escape)
+      {
+        Continue = false;
+      }
+      else
+      {
+        Continue = true;
+      }
+    }
 
 
     static void Main(string[] args)
     {
       Continue = true;
+
       while (Continue)
       {
+        // Get user input
         Console.WriteLine("\nPlease input list of prices");
         string priceList = Console.ReadLine();
 
+        // Run core logic
         var output = Run(priceList);
+
+        // Display results
         Console.WriteLine(output);
-        
+
+        // Quit or contuinue
         AskToContinue();
       }
 
