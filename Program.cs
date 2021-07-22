@@ -44,22 +44,18 @@ namespace StockTrading
     }
 
 
-    static void Run()
+    static string Run(string str)
     {
-      // Ask user for data
-      Console.WriteLine("\nPlease input list of prices");
-      string priceList = Console.ReadLine();
-
       // Split and convert to decimal array and handle FormatExceptions.
       decimal[] numericPrices;
+      
       try
       {
-        numericPrices = ConvertToDecimal(priceList);
+        numericPrices = ConvertToDecimal(str);
       }
       catch (System.FormatException)
       {
-        Console.WriteLine("\nIncorrect data format.");
-        return;
+        return "\nIncorrect data format.";
       }
 
       // Implement new instances and call methods for daily low and high prices.
@@ -69,11 +65,8 @@ namespace StockTrading
       HighDailyPrice High = new HighDailyPrice();
       High.FindHighest(numericPrices, Low.IndexOfLow);
 
-      // Display results
-      Console.WriteLine($"\nResults: { DisplayResults(Low, High)}");
 
-      return;
-
+      return $"\nResults: { DisplayResults(Low, High)}";
     }
 
 
@@ -83,7 +76,12 @@ namespace StockTrading
       Continue = true;
       while (Continue)
       {
-        Run();
+        Console.WriteLine("\nPlease input list of prices");
+        string priceList = Console.ReadLine();
+
+        var output = Run(priceList);
+        Console.WriteLine(output);
+        
         AskToContinue();
       }
 
