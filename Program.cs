@@ -31,7 +31,7 @@ namespace StockTrading
 
     // --------- Operations
 
-    public static string Run(string str)
+    public static string GetPrices(string str)
     {
       // Split string.
       decimal[] numericPrices;
@@ -81,10 +81,10 @@ namespace StockTrading
         var priceList = Console.ReadLine();
 
         // Run core logic
-        var output = Run(priceList);
+        var result = GetPrices(priceList);
 
         // Display results
-        Console.WriteLine(output);
+        Console.WriteLine(result);
 
         // Quit or contuinue
         Console.WriteLine("\nPress any key to continue. Press 'ESC' to quit.");
