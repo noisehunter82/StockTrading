@@ -21,7 +21,7 @@ namespace StockTrading
 
       var lowDay = (LowIndex + 1).ToString();
       var lowPrice = LowPrice.ToString("0.00");
-      var highDay = HighIndex == 0 ? "N/A" : (HighIndex + 1).ToString();
+      var highDay = HighIndex == 0m ? "N/A" : (HighIndex + 1).ToString();
       var highPrice = HighPrice.ToString("0.00");
 
       return $"\n{lowDay}({lowPrice}),{highDay}({highPrice})";

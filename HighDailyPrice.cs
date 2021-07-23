@@ -30,7 +30,7 @@ namespace StockTrading
     //Constructor
     public HighDailyPrice()
     {
-      HighPrice = 0;
+      HighPrice = 0m;
       IndexOfHigh = 0;
     }
 
