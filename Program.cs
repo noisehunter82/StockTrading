@@ -9,22 +9,22 @@ namespace StockTrading
 
     //--------- Utilities
 
-    public static decimal[] ConvertToDecimal(string str)
+    public static decimal[] ConvertToDecimal(string Str)
     {
-      string[] splitPrices = str.Split(',', StringSplitOptions.TrimEntries);
-      return Array.ConvertAll<string, decimal>(splitPrices, Convert.ToDecimal);
+      string[] SplitPrices = Str.Split(',', StringSplitOptions.TrimEntries);
+      return Array.ConvertAll<string, decimal>(SplitPrices, Convert.ToDecimal);
     }
 
 
-    public static string FormatResults(LowDailyPrice low, HighDailyPrice high)
+    public static string FormatResults(int LowIndex, decimal LowPrice, int HighIndex, decimal HighPrice)
     {
 
-      var lowDay = low.IndexOfLow + 1;
-      var lowPrice = low.LowPrice.ToString("0.00");
-      var highDay = high.IndexOfHigh == null ? "N/A" : (high.IndexOfHigh + 1).ToString();
-      var highPrice = high.HighPrice.ToString("0.00");
+      var lowDay = (LowIndex + 1).ToString();
+      var lowPrice = LowPrice.ToString("0.00");
+      var highDay = HighIndex == 0 ? "N/A" : (HighIndex + 1).ToString();
+      var highPrice = HighPrice.ToString("0.00");
 
-      return $"{lowDay}({lowPrice}),{highDay}({highPrice})";
+      return $"\n{lowDay}({lowPrice}),{highDay}({highPrice})";
 
     }
 
@@ -53,7 +53,7 @@ namespace StockTrading
       HighDailyPrice High = new HighDailyPrice();
       High.FindHighest(numericPrices, Low.IndexOfLow);
 
-      return FormatResults(Low, High);
+      return FormatResults(Low.IndexOfLow, Low.LowPrice, High.IndexOfHigh,High.HighPrice);
     }
 
 
